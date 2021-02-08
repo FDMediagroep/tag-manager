@@ -60,6 +60,11 @@ function Page(props: Props) {
     function handleTestUrlChange(e: React.ChangeEvent<HTMLInputElement>) {
         setTestUrl(e.currentTarget.value);
     }
+
+    function urlMatcher(testUrl: string, regExp: string) {
+        return new RegExp(regExp, 'gi').test(testUrl);
+    }
+
     return (
         <section className={styles.admin}>
             <h1>FDMG Tag Manager</h1>
@@ -84,14 +89,11 @@ function Page(props: Props) {
                 try {
                     return (
                         <TagComponent
-                            className={
-                                new RegExp(tag.match, 'gi').test(testUrl)
-                                    ? ''
-                                    : styles.regexError
-                            }
                             {...tag}
                             key={tag.uuid}
                             onSubmit={onSubmit}
+                            urlMatcher={urlMatcher}
+                            testUrl={testUrl}
                         />
                     );
                 } catch (e) {
@@ -100,11 +102,17 @@ function Page(props: Props) {
                             {...tag}
                             key={tag.uuid}
                             onSubmit={onSubmit}
+                            urlMatcher={urlMatcher}
+                            testUrl={testUrl}
                         />
                     );
                 }
             })}
-            <TagComponent onSubmit={onSubmit} />
+            <TagComponent
+                onSubmit={onSubmit}
+                urlMatcher={urlMatcher}
+                testUrl={testUrl}
+            />
         </section>
     );
 }
