@@ -82,13 +82,6 @@ function Page(props: Props) {
             />
             {tags.map((tag) => {
                 try {
-                    console.debug(
-                        'FDMG Tag Manager',
-                        'Match URL',
-                        new RegExp(tag.match, 'gi').source,
-                        tag.description,
-                        tag.uuid
-                    );
                     return (
                         <TagComponent
                             className={
@@ -130,7 +123,7 @@ export async function getServerSideProps({ req }) {
     if (req.method == 'POST') {
         const body = await getRawBody(req);
         const formData = new URLSearchParams(body.toString('utf-8'));
-        store(getUpdatedTags(tags, formData));
+        await store(getUpdatedTags(tags, formData));
     }
 
     return { props: { tags } };
