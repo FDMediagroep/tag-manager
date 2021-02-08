@@ -82,9 +82,9 @@ function TagComponent(props: Props) {
             <fieldset>
                 <legend>
                     <span onClick={toggleActive}>
-                        Tag ({props.state ?? "new"})
-                        {props.description ? ` - ${props.description}` : ""}
-                        {props.match ? ` - ${props.match}` : ""}
+                        State [{props.state ?? "new"}]
+                        {props.description ? ` - [${props.description}]` : ""}
+                        {props.match ? ` - [${props.match}]` : ""}
                     </span>
                 </legend>
                 <TextInput
@@ -121,12 +121,12 @@ function TagComponent(props: Props) {
                         }
                     />
                 </section>
-                <TextArea
+                <TextInput
                     className={styles.inputField}
                     id={`${props.uuid}-description`}
                     name="description"
-                    value={props.description}
                     label="Description"
+                    value={props.description}
                     required={true}
                 />
                 <TextArea
