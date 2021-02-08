@@ -1,0 +1,35 @@
+{
+    "name": "fdmg-tag-manager",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "next build",
+        "dev": "next dev",
+        "start": "next start",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "vc:dev": "vc dev"
+    },
+    "author": "Willem Liu",
+    "license": "ISC",
+    "devDependencies": {
+        "@fdmg/design-system": "^0.4.40",
+        "@types/basic-auth": "^1.1.3",
+        "@types/node": "^14.14.22",
+        "@types/raw-body": "^2.3.0",
+        "@types/react": "^17.0.1",
+        "@types/react-dom": "^17.0.0",
+        "aws-sdk": "^2.835.0",
+        "basic-auth": "^2.0.1",
+        "date-input-polyfill": "^2.14.0",
+        "jshint": "^2.12.0",
+        "next": "^10.0.6",
+        "raw-body": "^2.4.1",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "sass": "^1.32.6",
+        "typescript": "^4.1.3",
+        "uuid": "^3.3.2",
+        "vercel": "^21.2.2"
+    }
+}

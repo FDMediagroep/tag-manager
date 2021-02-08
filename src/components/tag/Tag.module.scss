@@ -1,0 +1,41 @@
+.tag {
+    &.error {
+        textarea[name="tag"] {
+            color: red;
+        }
+    }
+
+    fieldset {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid grey;
+        margin-bottom: 1rem;
+    }
+
+    legend {
+        cursor: pointer;
+    }
+
+    &:not(.opened) {
+        fieldset > :not(legend) {
+            display: none;
+        }
+    }
+
+    .states {
+        margin-bottom: 1rem;
+    }
+
+    .inputField {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        button {
+            margin: 1rem 0;
+        }
+    }
+}
