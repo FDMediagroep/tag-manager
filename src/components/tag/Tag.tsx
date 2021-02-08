@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { JSHINT } from 'jshint';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Tag.module.scss';
 import { Button } from '@fdmg/design-system/components/button/Button';
 import { ButtonGhost } from '@fdmg/design-system/components/button/ButtonGhost';
@@ -22,14 +22,28 @@ interface Props {
     match?: string;
     state?: 'active' | 'preview' | 'disabled';
     tag?: string;
+    testUrl?: string;
+    urlMatcher: (testUrl: string, regExp: string) => boolean;
     uuid?: string;
     [x: string]: any;
 }
 
 function TagComponent(props: Props) {
+    const [urlMatchRegExp, setUrlMatchRegExp] = useState(props.match);
     const [valid, setValid] = useState(false);
     const [opened, setOpened] = useState(false);
     const [remove, setRemove] = useState(false);
+
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        if (valid) {
+            props.onSubmit(e);
+        } else {
+            e.preventDefault();
+            alert(
+                'There are syntax errors. Check the console for more details.'
+            );
+        }
+    }
 
     function validSyntax(script: string) {
         let result = false;
@@ -62,6 +76,23 @@ function TagComponent(props: Props) {
         }
     }
 
+    const isMatchUrl = useCallback(() => {
+        console.log(
+            props.testUrl,
+            urlMatchRegExp,
+            props?.urlMatcher?.(props.testUrl, urlMatchRegExp) ??
+                new RegExp(urlMatchRegExp, 'gi').test(props.testUrl)
+        );
+        return (
+            props?.urlMatcher?.(props.testUrl, urlMatchRegExp) ??
+            new RegExp(urlMatchRegExp, 'gi').test(props.testUrl)
+        );
+    }, [props.testUrl, urlMatchRegExp]);
+
+    function handleUrlMatchChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setUrlMatchRegExp(e.currentTarget.value);
+    }
+
     useEffect(() => {
         setValid(validSyntax(props.tag));
     }, []);
@@ -69,10 +100,12 @@ function TagComponent(props: Props) {
     return (
         <form
             method="POST"
-            onSubmit={props.onSubmit}
+            onSubmit={handleSubmit}
             className={`${props.className} ${styles.tag}${
                 valid ? '' : ` ${styles.error}`
-            }${opened ? ` ${styles.opened}` : ''} ${styles[props.state]}`}
+            }${opened ? ` ${styles.opened}` : ''} ${styles[props.state]}${
+                isMatchUrl() ? '' : ` ${styles.regexError}`
+            }`}
         >
             <fieldset>
                 <legend>
@@ -136,11 +169,12 @@ function TagComponent(props: Props) {
                     required={true}
                 />
                 <TextInput
-                    className={styles.inputField}
+                    className={`${styles.inputField} ${styles.matchError}`}
                     id={`${props.uuid}-match`}
                     name="match"
                     label="URL Match (regex)"
                     defaultValue={props.match?.length ? props.match : '.*'}
+                    onChange={handleUrlMatchChange}
                 />
                 <section className={styles.buttons}>
                     <Button>Save</Button>

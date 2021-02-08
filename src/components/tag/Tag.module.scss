@@ -1,6 +1,6 @@
 .tag {
     &.error {
-        textarea[name="tag"] {
+        textarea[name='tag'] {
             color: red;
         }
     }
@@ -36,6 +36,15 @@
         justify-content: space-between;
         button {
             margin: 1rem 0;
+        }
+    }
+}
+
+.regexError {
+    &#{&} {
+        legend,
+        .matchError {
+            color: red;
         }
     }
 }
