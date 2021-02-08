@@ -3,6 +3,26 @@
 FDMG Tag Manager is a GUI for managing various JavaScript snippets which are concatenated to a single
 `.js` file and uploaded to an S3 bucket.
 
+## Getting started
+
+### Pre-requisites
+
+-   NodeJS
+
+### Install dependencies
+
+1. `npm i` - install dependencies
+
+## Development
+
+1. `npm run dev` - Start the app locally on `localhost:3000`
+
+### Run production build locally
+
+1. `npm run build` - Optimized production build
+
+1. `npm run start` - Start the app locally on `localhost:3000`
+
 ## States
 
 **Active**: Tag is active and can run when the generated `.js` file is included on the a page.
@@ -17,7 +37,7 @@ Each tag can also set it's own URL matching RegExp. This allows for more control
 
 ## Environment variables
 
-In order to store/load the tags/.js the FDMG Tag Manager requires a few environment variables to be setup:
+In order to store/load the tags/.js the FDMG Tag Manager requires a few environment variables to be setup. When running the app locally you can put these environment variables in a `.env` file in the root folder of the project:
 
 **PROD_AWS_ACCESS_KEY_ID**: Self-explanatory
 
