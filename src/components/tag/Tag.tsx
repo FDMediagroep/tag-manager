@@ -31,6 +31,17 @@ function TagComponent(props: Props) {
     const [opened, setOpened] = useState(false);
     const [remove, setRemove] = useState(false);
 
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        if (valid) {
+            props.onSubmit(e);
+        } else {
+            e.preventDefault();
+            alert(
+                'There are syntax errors. Check the console for more details.'
+            );
+        }
+    }
+
     function validSyntax(script: string) {
         let result = false;
         try {
@@ -69,7 +80,7 @@ function TagComponent(props: Props) {
     return (
         <form
             method="POST"
-            onSubmit={props.onSubmit}
+            onSubmit={handleSubmit}
             className={`${props.className} ${styles.tag}${
                 valid ? '' : ` ${styles.error}`
             }${opened ? ` ${styles.opened}` : ''} ${styles[props.state]}`}
