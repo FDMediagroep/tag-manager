@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Tag, TagComponent } from "../components/tag/Tag";
-import getRawBody from "raw-body";
-import { store } from "./api/store";
-import Link from "next/link";
-import { TextInput } from "@fdmg/design-system/components/input/TextInput";
-import styles from "./index.module.scss";
+import React, { useState } from 'react';
+import { Tag, TagComponent } from '../components/tag/Tag';
+import getRawBody from 'raw-body';
+import { store } from './api/store';
+import Link from 'next/link';
+import { TextInput } from '@fdmg/design-system/components/input/TextInput';
+import styles from './index.module.scss';
 
 interface Props {
     tags: Tag[];
@@ -12,11 +12,11 @@ interface Props {
 
 function getUpdatedTags(tags: Tag[], formData: any) {
     let newTags = [...tags];
-    let tagExists = newTags.find((tag) => tag.uuid === formData.get("uuid"));
+    const tagExists = newTags.find((tag) => tag.uuid === formData.get('uuid'));
     if (tagExists) {
         newTags = newTags.map((tag) => {
             let newTag: Tag = { tag: null, uuid: null };
-            if (tag.uuid === formData.get("uuid")) {
+            if (tag.uuid === formData.get('uuid')) {
                 formData.forEach((val, key) => {
                     newTag[key] = val;
                 });
@@ -27,21 +27,21 @@ function getUpdatedTags(tags: Tag[], formData: any) {
             return newTag;
         });
     } else {
-        let newTag: any = {};
+        const newTag: any = {};
         formData.forEach((val, key) => {
             newTag[key] = val;
         });
         newTags = [...newTags, newTag];
     }
-    if (formData.get("remove")) {
-        newTags = newTags.filter((tag) => tag.uuid !== formData.get("remove"));
+    if (formData.get('remove')) {
+        newTags = newTags.filter((tag) => tag.uuid !== formData.get('remove'));
     }
     return newTags;
 }
 
 function Page(props: Props) {
     const [tags, setTags] = useState(props.tags);
-    const [testUrl, setTestUrl] = useState("");
+    const [testUrl, setTestUrl] = useState('');
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -52,7 +52,7 @@ function Page(props: Props) {
             urlParams.append(key, value.toString());
         });
         fetch(window.location.href, {
-            method: "POST",
+            method: 'POST',
             body: urlParams,
         });
     }
@@ -83,17 +83,17 @@ function Page(props: Props) {
             {tags.map((tag) => {
                 try {
                     console.debug(
-                        "FDMG Tag Manager",
-                        "Match URL",
-                        new RegExp(tag.match, "gi").source,
+                        'FDMG Tag Manager',
+                        'Match URL',
+                        new RegExp(tag.match, 'gi').source,
                         tag.description,
                         tag.uuid
                     );
                     return (
                         <TagComponent
                             className={
-                                new RegExp(tag.match, "gi").test(testUrl)
-                                    ? ""
+                                new RegExp(tag.match, 'gi').test(testUrl)
+                                    ? ''
                                     : styles.regexError
                             }
                             {...tag}
@@ -127,9 +127,9 @@ export async function getServerSideProps({ req }) {
         console.error(e);
     }
 
-    if (req.method == "POST") {
+    if (req.method == 'POST') {
         const body = await getRawBody(req);
-        const formData = new URLSearchParams(body.toString("utf-8"));
+        const formData = new URLSearchParams(body.toString('utf-8'));
         store(getUpdatedTags(tags, formData));
     }
 

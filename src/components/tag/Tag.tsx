@@ -1,16 +1,16 @@
-import { v4 as uuidv4 } from "uuid";
-import { JSHINT } from "jshint";
-import React, { useEffect, useState } from "react";
-import styles from "./Tag.module.scss";
-import { Button } from "@fdmg/design-system/components/button/Button";
-import { ButtonGhost } from "@fdmg/design-system/components/button/ButtonGhost";
-import { TextInput } from "@fdmg/design-system/components/input/TextInput";
-import { TextArea } from "@fdmg/design-system/components/input/TextArea";
-import { Radio } from "@fdmg/design-system/components/input/Radio";
+import { v4 as uuidv4 } from 'uuid';
+import { JSHINT } from 'jshint';
+import React, { useEffect, useState } from 'react';
+import styles from './Tag.module.scss';
+import { Button } from '@fdmg/design-system/components/button/Button';
+import { ButtonGhost } from '@fdmg/design-system/components/button/ButtonGhost';
+import { TextInput } from '@fdmg/design-system/components/input/TextInput';
+import { TextArea } from '@fdmg/design-system/components/input/TextArea';
+import { Radio } from '@fdmg/design-system/components/input/Radio';
 
 export interface Tag {
     uuid: string;
-    state?: "active" | "preview" | "disabled";
+    state?: 'active' | 'preview' | 'disabled';
     tag: string;
     description?: string;
     match?: string;
@@ -20,7 +20,7 @@ interface Props {
     description?: string;
     onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
     match?: string;
-    state?: "active" | "preview" | "disabled";
+    state?: 'active' | 'preview' | 'disabled';
     tag?: string;
     uuid?: string;
     [x: string]: any;
@@ -55,7 +55,7 @@ function TagComponent(props: Props) {
     }
 
     function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
-        if (confirm("Remove this tag permanently?")) {
+        if (confirm('Remove this tag permanently?')) {
             setRemove(true);
         } else {
             e.preventDefault();
@@ -71,15 +71,15 @@ function TagComponent(props: Props) {
             method="POST"
             onSubmit={props.onSubmit}
             className={`${props.className} ${styles.tag}${
-                valid ? "" : ` ${styles.error}`
-            }${opened ? ` ${styles.opened}` : ""} ${styles[props.state]}`}
+                valid ? '' : ` ${styles.error}`
+            }${opened ? ` ${styles.opened}` : ''} ${styles[props.state]}`}
         >
             <fieldset>
                 <legend>
                     <span onClick={toggleActive}>
-                        State [{props.state ?? "new"}]
-                        {props.description ? ` - [${props.description}]` : ""}
-                        {props.match ? ` - [${props.match}]` : ""}
+                        State [{props.state ?? 'new'}]
+                        {props.description ? ` - [${props.description}]` : ''}
+                        {props.match ? ` - [${props.match}]` : ''}
                     </span>
                 </legend>
                 <TextInput
@@ -97,14 +97,14 @@ function TagComponent(props: Props) {
                         label="Active"
                         name="state"
                         value="active"
-                        defaultChecked={props.state === "active"}
+                        defaultChecked={props.state === 'active'}
                     />
                     <Radio
                         id={`${props.uuid}-state-preview`}
                         label="Preview"
                         name="state"
                         value="preview"
-                        defaultChecked={props.state === "preview"}
+                        defaultChecked={props.state === 'preview'}
                     />
                     <Radio
                         id={`${props.uuid}-state-disabled`}
@@ -112,7 +112,7 @@ function TagComponent(props: Props) {
                         name="state"
                         value="disabled"
                         defaultChecked={
-                            !props.state || props.state === "disabled"
+                            !props.state || props.state === 'disabled'
                         }
                     />
                 </section>
@@ -140,7 +140,7 @@ function TagComponent(props: Props) {
                     id={`${props.uuid}-match`}
                     name="match"
                     label="URL Match (regex)"
-                    defaultValue={props.match?.length ? props.match : ".*"}
+                    defaultValue={props.match?.length ? props.match : '.*'}
                 />
                 <section className={styles.buttons}>
                     <Button>Save</Button>

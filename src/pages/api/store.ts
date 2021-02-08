@@ -1,6 +1,6 @@
-import zlib from "zlib";
-import AWS from "aws-sdk";
-import { Tag } from "../../components/tag/Tag";
+import zlib from 'zlib';
+import AWS from 'aws-sdk';
+import { Tag } from '../../components/tag/Tag';
 
 /**
  * Credentials and distribution id from environment variables
@@ -9,7 +9,7 @@ const credentials = {
     accessKeyId: process.env.PROD_AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.PROD_AWS_SECRET_ACCESS_KEY,
 };
-let distributionId = process.env.PROD_CDN_DISTRIBUTION_ID;
+const distributionId = process.env.PROD_CDN_DISTRIBUTION_ID;
 
 /**
  * Create S3 instance.
@@ -54,14 +54,14 @@ function getJsArray(tags: Tag[]) {
         /**
          * Don't add tag JS when it's disabled.
          */
-        if (tag.state === "disabled") {
+        if (tag.state === 'disabled') {
             return null;
         }
         let js = tag.tag;
         /**
          * Encapsulate preview tag with check for query parameter.
          */
-        if (tag.state === "preview") {
+        if (tag.state === 'preview') {
             hasPreview = true;
             js = `if (__ftm_prev) {${js}}`;
         }
@@ -77,8 +77,8 @@ function getJsArray(tags: Tag[]) {
          * Add tag description as code doc.
          */
         const description = tag?.description
-            ? `/** ${tag?.description?.replace("/", "%2F")} */\n`
-            : "";
+            ? `/** ${tag?.description?.replace('/', '%2F')} */\n`
+            : '';
         return `${description}try { ${js} } catch(e) { console.error(e); }`;
     });
 
@@ -97,23 +97,23 @@ function getJsArray(tags: Tag[]) {
 
 export async function store(tags: Tag[]) {
     console.log(
-        "Store to",
+        'Store to',
         `${process.env.PROD_BUCKET}/${process.env.S3_LOCATION}`
     );
 
     const jsArray = getJsArray(tags);
 
     const compressedJson = zlib.gzipSync(JSON.stringify(tags, null, 2));
-    const compressedJS = zlib.gzipSync(jsArray.join("\n"));
+    const compressedJS = zlib.gzipSync(jsArray.join('\n'));
 
     await s3
         .upload({
             Bucket: process.env.PROD_BUCKET,
             Body: compressedJson,
             Key: `${process.env.S3_LOCATION}tags.json`,
-            ContentType: "application/json",
-            ContentEncoding: "gzip",
-            ACL: "public-read",
+            ContentType: 'application/json',
+            ContentEncoding: 'gzip',
+            ACL: 'public-read',
         })
         .promise()
         .then(async (uploadResult) => {
@@ -125,9 +125,9 @@ export async function store(tags: Tag[]) {
             Bucket: process.env.PROD_BUCKET,
             Body: compressedJS,
             Key: `${process.env.S3_LOCATION}tags.js`,
-            ContentType: "application/javascript",
-            ContentEncoding: "gzip",
-            ACL: "public-read",
+            ContentType: 'application/javascript',
+            ContentEncoding: 'gzip',
+            ACL: 'public-read',
         })
         .promise()
         .then(async (uploadResult) => {
@@ -138,7 +138,7 @@ export async function store(tags: Tag[]) {
 }
 
 async function handler(req, res) {
-    res.end("OK");
+    res.end('OK');
 }
 
 export default handler;

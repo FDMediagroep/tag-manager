@@ -4,9 +4,9 @@ import Document, {
     NextScript,
     Head,
     DocumentContext,
-} from "next/document";
-import React from "react";
-import auth from "basic-auth";
+} from 'next/document';
+import React from 'react';
+import auth from 'basic-auth';
 
 declare let process: any;
 
@@ -31,10 +31,10 @@ export default class MyDocument extends Document<any> {
             if (!user || !verifyCredentials(user.name, user.pass)) {
                 ctx.res.statusCode = 401;
                 ctx.res.setHeader(
-                    "WWW-Authenticate",
+                    'WWW-Authenticate',
                     'Basic realm="FDMG Tag Manager"'
                 );
-                ctx?.res?.end?.("Access denied");
+                ctx?.res?.end?.('Access denied');
             }
         }
 
