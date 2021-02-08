@@ -77,7 +77,7 @@ function getJsArray(tags: Tag[]) {
          * Add tag description as code doc.
          */
         const description = tag?.description
-            ? `/** ${tag?.description?.replace('/', '%2F')} */\n`
+            ? `/** ${tag?.description?.replace(/\//g, '%2F')} */\n`
             : '';
         return `${description}try { ${js} } catch(e) { console.error(e); }`;
     });
