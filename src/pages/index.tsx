@@ -130,7 +130,7 @@ export async function getServerSideProps({ req }) {
     if (req.method == 'POST') {
         const body = await getRawBody(req);
         const formData = new URLSearchParams(body.toString('utf-8'));
-        store(getUpdatedTags(tags, formData));
+        await store(getUpdatedTags(tags, formData));
     }
 
     return { props: { tags } };
