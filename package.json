@@ -19,7 +19,7 @@
         "@types/raw-body": "^2.3.0",
         "@types/react": "^17.0.1",
         "@types/react-dom": "^17.0.0",
-        "aws-sdk": "^2.835.0",
+        "aws-sdk": "^2.839.0",
         "basic-auth": "^2.0.1",
         "date-input-polyfill": "^2.14.0",
         "jshint": "^2.12.0",
