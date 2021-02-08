@@ -82,7 +82,8 @@ function Page(props: Props) {
             />
             {tags.map((tag) => {
                 try {
-                    console.log(
+                    console.debug(
+                        "FDMG Tag Manager",
                         "Match URL",
                         new RegExp(tag.match, "gi").source,
                         tag.description,

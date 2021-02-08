@@ -38,21 +38,16 @@ function TagComponent(props: Props) {
             if (!JSHINT.errors.length) {
                 result = true;
             } else {
-                console.error(JSHINT.errors);
+                console.warn(JSHINT.errors);
             }
         } catch (e) {
-            console.log(e);
+            console.warn(e);
         }
         return result;
     }
 
     function onChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-        try {
-            setValid(validSyntax(e.currentTarget.value));
-        } catch (e) {
-            console.log(e);
-            setValid(false);
-        }
+        setValid(validSyntax(e.currentTarget.value));
     }
 
     function toggleActive() {
