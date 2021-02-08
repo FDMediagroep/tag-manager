@@ -1,3 +1,6 @@
+![Build](https://github.com/FDMediagroep/tag-manager/workflows/Build/badge.svg)
+![CodeQL](https://github.com/FDMediagroep/tag-manager/workflows/CodeQL/badge.svg)
+
 # tag-manager
 
 FDMG Tag Manager is a GUI for managing various JavaScript snippets which are concatenated to a single
