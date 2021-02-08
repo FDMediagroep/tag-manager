@@ -1,7 +1,7 @@
 {
     "name": "fdmg-tag-manager",
     "version": "1.0.0",
-    "description": "",
+    "description": "a GUI for managing JavaScript snippets",
     "main": "index.js",
     "scripts": {
         "build": "next build",
