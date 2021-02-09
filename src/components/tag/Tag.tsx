@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { JSHINT } from 'jshint';
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Tag.module.scss';
@@ -9,7 +8,7 @@ import { TextArea } from '@fdmg/design-system/components/input/TextArea';
 import { Radio } from '@fdmg/design-system/components/input/Radio';
 
 export interface Tag {
-    uuid?: string;
+    uuid: string;
     state?: 'active' | 'preview' | 'disabled';
     tag?: string;
     timing?:
@@ -124,7 +123,7 @@ function TagComponent(props: Props) {
                     name="uuid"
                     label="Tag id"
                     readOnly={true}
-                    value={props.uuid ?? uuidv4()}
+                    value={props.uuid}
                 />
                 <section className={styles.radioGroup}>
                     <p>Tag state:</p>

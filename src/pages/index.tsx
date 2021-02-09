@@ -3,6 +3,7 @@ import { Tag, TagComponent } from '../components/tag/Tag';
 import getRawBody from 'raw-body';
 import { store } from './api/store';
 import Link from 'next/link';
+import { v4 as uuidv4 } from 'uuid';
 import { TextInput } from '@fdmg/design-system/components/input/TextInput';
 import styles from './index.module.scss';
 
@@ -109,6 +110,8 @@ function Page(props: Props) {
                 }
             })}
             <TagComponent
+                key={uuidv4()}
+                uuid={uuidv4()}
                 onSubmit={onSubmit}
                 urlMatcher={urlMatcher}
                 testUrl={testUrl}
