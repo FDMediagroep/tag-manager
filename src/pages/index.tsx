@@ -87,27 +87,15 @@ function Page(props: Props) {
                 onChange={handleTestUrlChange}
             />
             {tags.map((tag) => {
-                try {
-                    return (
-                        <TagComponent
-                            {...tag}
-                            key={tag.uuid}
-                            onSubmit={onSubmit}
-                            urlMatcher={urlMatcher}
-                            testUrl={testUrl}
-                        />
-                    );
-                } catch (e) {
-                    return (
-                        <TagComponent
-                            {...tag}
-                            key={tag.uuid}
-                            onSubmit={onSubmit}
-                            urlMatcher={urlMatcher}
-                            testUrl={testUrl}
-                        />
-                    );
-                }
+                return (
+                    <TagComponent
+                        {...tag}
+                        key={tag.uuid}
+                        onSubmit={onSubmit}
+                        urlMatcher={urlMatcher}
+                        testUrl={testUrl}
+                    />
+                );
             })}
             <TagComponent
                 key={uuidv4()}
