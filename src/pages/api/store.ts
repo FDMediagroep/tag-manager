@@ -73,6 +73,21 @@ function getJsArray(tags: Tag[]) {
                 new RegExp(tag.match).source
             }/gi)) {${js}}`;
         }
+
+        /**
+         * Encapsulate tag with Timing event.
+         */
+        if (tag.timing) {
+            switch (tag.timing) {
+                case 'immediate':
+                    break;
+                case 'load':
+                case 'beforeunload':
+                case 'DOMContentLoaded':
+                    js = `window.addEventListener('${tag.timing}', function() {${js}})`;
+                    break;
+            }
+        }
         /**
          * Add tag description as code doc.
          */

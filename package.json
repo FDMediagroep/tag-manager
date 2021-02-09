@@ -10,7 +10,8 @@
         "prettier": "prettier -c **/*.ts?",
         "start": "next start",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "vc:dev": "vc dev"
+        "vc:dev": "vc dev",
+        "vc:rm": "vc rm tag-manager --safe --yes"
     },
     "author": "Willem Liu",
     "license": "ISC",

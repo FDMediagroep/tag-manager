@@ -9,22 +9,24 @@ import { TextArea } from '@fdmg/design-system/components/input/TextArea';
 import { Radio } from '@fdmg/design-system/components/input/Radio';
 
 export interface Tag {
-    uuid: string;
+    uuid?: string;
     state?: 'active' | 'preview' | 'disabled';
-    tag: string;
+    tag?: string;
+    timing?:
+        | 'immediate'
+        | 'DOMContentLoaded'
+        | 'load'
+        | 'readystatechange'
+        | 'beforeunload'
+        | 'unload';
     description?: string;
     match?: string;
 }
 
-interface Props {
-    description?: string;
+interface Props extends Tag {
     onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
-    match?: string;
-    state?: 'active' | 'preview' | 'disabled';
-    tag?: string;
     testUrl?: string;
     urlMatcher: (testUrl: string, regExp: string) => boolean;
-    uuid?: string;
     [x: string]: any;
 }
 
@@ -110,7 +112,8 @@ function TagComponent(props: Props) {
             <fieldset>
                 <legend>
                     <span onClick={toggleActive}>
-                        State [{props.state ?? 'new'}]
+                        State [{props.state ?? 'new'}] - Timing [
+                        {props.timing ?? 'immediate'}]
                         {props.description ? ` - [${props.description}]` : ''}
                         {props.match ? ` - [${props.match}]` : ''}
                     </span>
@@ -123,7 +126,7 @@ function TagComponent(props: Props) {
                     readOnly={true}
                     value={props.uuid ?? uuidv4()}
                 />
-                <section className={styles.states}>
+                <section className={styles.radioGroup}>
                     <p>Tag state:</p>
                     <Radio
                         id={`${props.uuid}-state-active`}
@@ -154,7 +157,7 @@ function TagComponent(props: Props) {
                     id={`${props.uuid}-description`}
                     name="description"
                     label="Description"
-                    value={props.description}
+                    defaultValue={props.description}
                     required={true}
                 />
                 <TextArea
@@ -176,6 +179,39 @@ function TagComponent(props: Props) {
                     defaultValue={props.match?.length ? props.match : '.*'}
                     onChange={handleUrlMatchChange}
                 />
+                <section className={styles.radioGroup}>
+                    <p>Timing:</p>
+                    <Radio
+                        id={`${props.uuid}-timing-immediate`}
+                        label="Immediate"
+                        name="timing"
+                        value="immediate"
+                        defaultChecked={
+                            !props.timing || props.timing === 'immediate'
+                        }
+                    />
+                    <Radio
+                        id={`${props.uuid}-timing-DOMContentLoaded`}
+                        label="DOMContentLoaded"
+                        name="timing"
+                        value="DOMContentLoaded"
+                        defaultChecked={props.timing === 'DOMContentLoaded'}
+                    />
+                    <Radio
+                        id={`${props.uuid}-timing-load`}
+                        label="Load"
+                        name="timing"
+                        value="load"
+                        defaultChecked={props.timing === 'load'}
+                    />
+                    <Radio
+                        id={`${props.uuid}-timing-beforeunload`}
+                        label="Beforeunload"
+                        name="timing"
+                        value="beforeunload"
+                        defaultChecked={props.timing === 'beforeunload'}
+                    />
+                </section>
                 <section className={styles.buttons}>
                     <Button>Save</Button>
                     <ButtonGhost onClick={handleDelete}>Remove</ButtonGhost>
