@@ -34,6 +34,20 @@ FDMG Tag Manager is a GUI for managing various JavaScript snippets which are con
 
 **Disabled**: Tag is disabled and is also omitted from the generated `.js` file.
 
+## Timing
+
+-   **immediate**: Snippet will be executed as soon as it has been parsed.
+
+-   **DOMContentLoaded**: Snippet will execute when the browser fires this event.
+
+-   **load**: Snippet will execute when the browser fires this event.
+
+-   **readystatechange**: Snippet will execute when the browser fires this event.
+
+-   **beforeunload**: Snippet will execute when the browser fires this event.
+
+-   **unload**: Snippet will execute when the browser fires this event.
+
 ## URL matching
 
 Each tag can also set it's own URL matching RegExp. This allows for more control over on which url(s) a tag is allowed to run.
