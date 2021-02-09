@@ -114,7 +114,18 @@ function TagComponent(props: Props) {
                         State [{props.state ?? 'new'}] - Timing [
                         {props.timing ?? 'immediate'}]
                         {props.description ? ` - [${props.description}]` : ''}
-                        {props.match ? ` - [${props.match}]` : ''}
+                        {props.match ? (
+                            <>
+                                {' '}
+                                -{' '}
+                                <span className={styles.matchError}>
+                                    [{props.match}]
+                                </span>
+                                ,
+                            </>
+                        ) : (
+                            ''
+                        )}
                     </span>
                 </legend>
                 <TextInput
