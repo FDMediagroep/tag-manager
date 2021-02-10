@@ -121,7 +121,6 @@ function TagComponent(props: Props) {
                                 <span className={styles.matchError}>
                                     [{props.match}]
                                 </span>
-                                ,
                             </>
                         ) : (
                             ''
