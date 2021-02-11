@@ -6,11 +6,10 @@ import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
 import { TextInput } from '@fdmg/design-system/components/input/TextInput';
 import styles from './index.module.scss';
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { signIn, signOut, useSession, getSession } from 'next-auth/client';
 import { Button } from '@fdmg/design-system/components/button/Button';
 
 interface Props {
-    requiresLogin: boolean;
     tags: Tag[];
 }
 
@@ -85,16 +84,14 @@ function Page(props: Props) {
 
     return (
         <>
-            {props.requiresLogin && loading && (
-                <section className={styles.login} />
-            )}
-            {props.requiresLogin && !session && !loading && (
+            {loading && <section className={styles.login} />}
+            {!session && !loading && (
                 <section className={styles.login}>
                     <h1>FDMG Tag Manager</h1>
                     <Button onClick={() => signIn()}>Sign in</Button>
                 </section>
             )}
-            {(session || !props.requiresLogin) && (
+            {session && (
                 <section className={styles.admin}>
                     <h1>
                         FDMG Tag Manager{' '}
@@ -141,10 +138,12 @@ function Page(props: Props) {
     );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const session = getSession(context);
     const tags = await getTags();
 
-    if (req.method == 'POST') {
+    if (session && req.method == 'POST') {
         const body = await getRawBody(req);
         const formData = new URLSearchParams(body.toString('utf-8'));
         await store(getUpdatedTags(tags, formData));
@@ -152,9 +151,8 @@ export async function getServerSideProps({ req }) {
 
     return {
         props: {
+            session,
             tags,
-            requiresLogin:
-                process.env.BASIC_AUTH_USER && process.env.BASIC_AUTH_PASS,
         },
     };
 }
