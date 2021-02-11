@@ -66,9 +66,9 @@ In order to store/load the tags/.js the FDMG Tag Manager requires a few environm
 
 **PROD_CDN_DISTRIBUTION_ID**: Self-explanatory
 
-**BASIC_AUTH_USER**: Basic Auth user and pass are optional. Although recommended when you decide to deploy this to a webserver. For maximum security it is recommended to run this application locally.
+**BASIC_AUTH_USER**: For maximum security it is recommended to run this application locally only.
 
-**BASIC_AUTH_PASS**: Basic Auth user and pass are optional. Although recommended when you decide to deploy this to a webserver. For maximum security it is recommended to run this application locally.
+**BASIC_AUTH_PASS**: For maximum security it is recommended to run this application locally only.
 
 **S3_LOCATION**: Sub-bucket location within the S3 Bucket
 
