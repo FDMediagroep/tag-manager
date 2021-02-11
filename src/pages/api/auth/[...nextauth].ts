@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 
 async function handler(req, res) {
-    NextAuth(req, res, {
+    return NextAuth(req, res, {
         // Configure one or more authentication providers
         providers: [
             Providers.Credentials({
