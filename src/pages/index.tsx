@@ -6,8 +6,11 @@ import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
 import { TextInput } from '@fdmg/design-system/components/input/TextInput';
 import styles from './index.module.scss';
+import { signIn, signOut, useSession } from 'next-auth/client';
+import { Button } from '@fdmg/design-system/components/button/Button';
 
 interface Props {
+    requiresLogin: boolean;
     tags: Tag[];
 }
 
@@ -54,6 +57,7 @@ function getUpdatedTags(tags: Tag[], formData: any) {
 }
 
 function Page(props: Props) {
+    const [session, loading] = useSession();
     const [tags, setTags] = useState(props.tags);
     const [testUrl, setTestUrl] = useState('');
 
@@ -80,44 +84,60 @@ function Page(props: Props) {
     }
 
     return (
-        <section className={styles.admin}>
-            <h1>FDMG Tag Manager</h1>
-            <p>
-                {`Script: https://${process.env.PROD_BUCKET}/${process.env.S3_LOCATION}tags.js`}
-            </p>
-            <p>
-                <Link href="/test">
-                    <a>Test page</a>
-                </Link>
-            </p>
-            <TextInput
-                className={styles.inputFields}
-                id="testURL"
-                type="text"
-                name="test-url"
-                label="Test URL"
-                defaultValue={testUrl}
-                onChange={handleTestUrlChange}
-            />
-            {tags.map((tag) => {
-                return (
+        <>
+            {props.requiresLogin && loading && (
+                <section className={styles.login} />
+            )}
+            {props.requiresLogin && !session && !loading && (
+                <section className={styles.login}>
+                    <h1>FDMG Tag Manager</h1>
+                    <Button onClick={() => signIn()}>Sign in</Button>
+                </section>
+            )}
+            {(session || !props.requiresLogin) && (
+                <section className={styles.admin}>
+                    <h1>
+                        FDMG Tag Manager{' '}
+                        <Button onClick={() => signOut()}>Sign out</Button>
+                    </h1>
+                    <p>
+                        {`Script: https://${process.env.PROD_BUCKET}/${process.env.S3_LOCATION}tags.js`}
+                    </p>
+                    <p>
+                        <Link href="/test">
+                            <a>Test page</a>
+                        </Link>
+                    </p>
+                    <TextInput
+                        className={styles.inputFields}
+                        id="testURL"
+                        type="text"
+                        name="test-url"
+                        label="Test URL"
+                        defaultValue={testUrl}
+                        onChange={handleTestUrlChange}
+                    />
+                    {tags.map((tag) => {
+                        return (
+                            <TagComponent
+                                {...tag}
+                                key={tag.uuid}
+                                onSubmit={onSubmit}
+                                urlMatcher={urlMatcher}
+                                testUrl={testUrl}
+                            />
+                        );
+                    })}
                     <TagComponent
-                        {...tag}
-                        key={tag.uuid}
+                        key={uuidv4()}
+                        uuid={uuidv4()}
                         onSubmit={onSubmit}
                         urlMatcher={urlMatcher}
                         testUrl={testUrl}
                     />
-                );
-            })}
-            <TagComponent
-                key={uuidv4()}
-                uuid={uuidv4()}
-                onSubmit={onSubmit}
-                urlMatcher={urlMatcher}
-                testUrl={testUrl}
-            />
-        </section>
+                </section>
+            )}
+        </>
     );
 }
 
@@ -130,7 +150,13 @@ export async function getServerSideProps({ req }) {
         await store(getUpdatedTags(tags, formData));
     }
 
-    return { props: { tags } };
+    return {
+        props: {
+            tags,
+            requiresLogin:
+                process.env.BASIC_AUTH_USER && process.env.BASIC_AUTH_PASS,
+        },
+    };
 }
 
 export default Page;
