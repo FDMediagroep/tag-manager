@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
+import { Provider } from 'next-auth/client';
 import './_app.scss';
 import '@fdmg/design-system/components/design-tokens/design-tokens.css';
 import '@fdmg/design-system/components/button/Button.css';
@@ -14,7 +15,9 @@ function PersistentApp({ Component, pageProps }: any) {
             <Head>
                 <title>FDMG Tag Manager</title>
             </Head>
-            <Component {...pageProps} />
+            <Provider session={pageProps.session}>
+                <Component {...pageProps} />
+            </Provider>
         </>
     );
 }

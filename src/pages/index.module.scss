@@ -1,6 +1,22 @@
 .admin {
+    > h1 {
+        display: flex;
+        justify-content: space-between;
+    }
     .inputFields {
         margin-bottom: 1rem;
         width: 100%;
     }
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }

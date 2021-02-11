@@ -6,16 +6,19 @@ import Document, {
     DocumentContext,
 } from 'next/document';
 import React from 'react';
-import auth from 'basic-auth';
+// import auth from 'basic-auth';
 
-declare let process: any;
+/**
+ * We've replaced basic-auth with next-auth.
+ */
+// declare let process: any;
 
-function verifyCredentials(username: string, password: string) {
-    return !!(
-        username === process.env.BASIC_AUTH_USER &&
-        password === process.env.BASIC_AUTH_PASS
-    );
-}
+// function verifyCredentials(username: string, password: string) {
+//     return !!(
+//         username === process.env.BASIC_AUTH_USER &&
+//         password === process.env.BASIC_AUTH_PASS
+//     );
+// }
 
 /**
  * Overrides the NextJS Document component which is only run server-side.
@@ -24,19 +27,22 @@ function verifyCredentials(username: string, password: string) {
  */
 export default class MyDocument extends Document<any> {
     static async getInitialProps(ctx: DocumentContext) {
-        if (ctx.req) {
-            const user = auth(ctx.req); // => { name: 'something', pass: 'whatever' }
+        /**
+         * We've replaced basic-auth with next-auth.
+         */
+        // if (ctx.req) {
+        //     const user = auth(ctx.req); // => { name: 'something', pass: 'whatever' }
 
-            // Basic auth credential checking.
-            if (!user || !verifyCredentials(user.name, user.pass)) {
-                ctx.res.statusCode = 401;
-                ctx.res.setHeader(
-                    'WWW-Authenticate',
-                    'Basic realm="FDMG Tag Manager"'
-                );
-                ctx?.res?.end?.('Access denied');
-            }
-        }
+        //     // Basic auth credential checking.
+        //     if (!user || !verifyCredentials(user.name, user.pass)) {
+        //         ctx.res.statusCode = 401;
+        //         ctx.res.setHeader(
+        //             'WWW-Authenticate',
+        //             'Basic realm="FDMG Tag Manager"'
+        //         );
+        //         ctx?.res?.end?.('Access denied');
+        //     }
+        // }
 
         const initialProps: any = await Document.getInitialProps(ctx);
         return {
