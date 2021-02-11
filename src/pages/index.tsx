@@ -140,7 +140,7 @@ function Page(props: Props) {
 
 export async function getServerSideProps(context) {
     const { req } = context;
-    const session = getSession(context);
+    const session = await getSession(context);
     const tags = await getTags();
 
     if (session && req.method == 'POST') {
