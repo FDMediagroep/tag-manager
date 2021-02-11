@@ -11,6 +11,19 @@ interface Props {
     tags: Tag[];
 }
 
+async function getTags() {
+    let tags: Tag[] = [];
+    try {
+        const storeTags = await fetch(
+            `https://s3.eu-west-1.amazonaws.com/${process.env.PROD_BUCKET}/${process.env.S3_LOCATION}tags.json`
+        ).then((res) => res.json());
+        tags = storeTags;
+    } catch (e) {
+        console.error(e);
+    }
+    return tags;
+}
+
 function getUpdatedTags(tags: Tag[], formData: any) {
     let newTags = [...tags];
     const tagExists = newTags.find((tag) => tag.uuid === formData.get('uuid'));
@@ -44,15 +57,15 @@ function Page(props: Props) {
     const [tags, setTags] = useState(props.tags);
     const [testUrl, setTestUrl] = useState('');
 
-    function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        setTags(getUpdatedTags(tags, formData));
+        setTags(getUpdatedTags(await getTags(), formData));
         const urlParams = new URLSearchParams();
         formData.forEach((value, key) => {
             urlParams.append(key, value.toString());
         });
-        fetch(window.location.href, {
+        await fetch(window.location.href, {
             method: 'POST',
             body: urlParams,
         });
@@ -109,15 +122,7 @@ function Page(props: Props) {
 }
 
 export async function getServerSideProps({ req }) {
-    let tags: Tag[] = [];
-    try {
-        const storeTags = await fetch(
-            `https://s3.eu-west-1.amazonaws.com/${process.env.PROD_BUCKET}/${process.env.S3_LOCATION}tags.json`
-        ).then((res) => res.json());
-        tags = storeTags;
-    } catch (e) {
-        console.error(e);
-    }
+    const tags = await getTags();
 
     if (req.method == 'POST') {
         const body = await getRawBody(req);
