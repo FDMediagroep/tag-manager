@@ -78,16 +78,21 @@ function TagComponent(props: Props) {
     }
 
     const isMatchUrl = useCallback(() => {
-        console.log(
-            props.testUrl,
-            urlMatchRegExp,
-            props?.urlMatcher?.(props.testUrl, urlMatchRegExp) ??
+        try {
+            console.log(
+                props.testUrl,
+                urlMatchRegExp,
+                props?.urlMatcher?.(props.testUrl, urlMatchRegExp) ??
+                    new RegExp(urlMatchRegExp, 'gi').test(props.testUrl)
+            );
+            return (
+                props?.urlMatcher?.(props.testUrl, urlMatchRegExp) ??
                 new RegExp(urlMatchRegExp, 'gi').test(props.testUrl)
-        );
-        return (
-            props?.urlMatcher?.(props.testUrl, urlMatchRegExp) ??
-            new RegExp(urlMatchRegExp, 'gi').test(props.testUrl)
-        );
+            );
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
     }, [props.testUrl, urlMatchRegExp]);
 
     function handleUrlMatchChange(e: React.ChangeEvent<HTMLInputElement>) {

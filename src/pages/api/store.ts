@@ -69,9 +69,13 @@ function getJsArray(tags: Tag[]) {
          * Encapsulate tag with URL match check.
          */
         if (tag.match) {
-            js = `if (window.location.href.match(/${
-                new RegExp(tag.match).source
-            }/gi)) {${js}}`;
+            try {
+                js = `if (window.location.href.match(/${
+                    new RegExp(tag.match).source
+                }/gi)) {${js}}`;
+            } catch (e) {
+                console.error(e);
+            }
         }
 
         /**
