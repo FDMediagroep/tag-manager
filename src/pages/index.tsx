@@ -81,7 +81,12 @@ function Page(props: Props) {
     }
 
     function urlMatcher(testUrl: string, regExp: string) {
-        return new RegExp(regExp, 'gi').test(testUrl);
+        try {
+            return new RegExp(regExp, 'gi').test(testUrl);
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
     }
 
     return (
