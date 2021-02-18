@@ -59,6 +59,7 @@ function Page(props: Props) {
     const [session, loading] = useSession();
     const [tags, setTags] = useState(props.tags);
     const [testUrl, setTestUrl] = useState('');
+    const [newUuidv4, setNewUuidv4] = useState(uuidv4());
 
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -72,6 +73,7 @@ function Page(props: Props) {
             method: 'POST',
             body: urlParams,
         });
+        setNewUuidv4(uuidv4());
     }
 
     function handleTestUrlChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -126,8 +128,8 @@ function Page(props: Props) {
                         );
                     })}
                     <TagComponent
-                        key={uuidv4()}
-                        uuid={uuidv4()}
+                        key={newUuidv4}
+                        uuid={newUuidv4}
                         onSubmit={onSubmit}
                         urlMatcher={urlMatcher}
                         testUrl={testUrl}
