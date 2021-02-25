@@ -17,7 +17,8 @@ async function getTags() {
     let tags: Tag[] = [];
     try {
         const storeTags = await fetch(
-            `https://s3.eu-west-1.amazonaws.com/${process.env.PROD_BUCKET}/${process.env.S3_LOCATION}tags.json`
+            `https://s3.eu-west-1.amazonaws.com/${process.env.PROD_BUCKET}/${process.env.S3_LOCATION}tags.json`,
+            { cache: 'no-cache' }
         ).then((res) => res.json());
         tags = storeTags;
     } catch (e) {
