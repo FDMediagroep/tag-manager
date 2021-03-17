@@ -34,7 +34,7 @@
         "eslint-plugin-prettier": "^3.3.1",
         "eslint-plugin-react": "^7.22.0",
         "jshint": "^2.12.0",
-        "next": "^10.0.7",
+        "next": "^10.0.9",
         "next-auth": "^3.7.0",
         "prettier": "^2.2.1",
         "raw-body": "^2.4.1",
