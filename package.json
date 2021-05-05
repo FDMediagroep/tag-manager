@@ -25,7 +25,7 @@
         "@types/react-dom": "^17.0.3",
         "@typescript-eslint/eslint-plugin": "^4.22.1",
         "@typescript-eslint/parser": "^4.22.0",
-        "@typescript-eslint/typescript-estree": "^4.22.0",
+        "@typescript-eslint/typescript-estree": "^4.22.1",
         "aws-sdk": "^2.894.0",
         "basic-auth": "^2.0.1",
         "date-input-polyfill": "^2.14.0",
