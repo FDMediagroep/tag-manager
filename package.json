@@ -42,7 +42,7 @@
         "eslint-plugin-react": "^7.23.2",
         "jshint": "^2.12.0",
         "next": "^10.2.3",
-        "next-auth": "^3.23.3",
+        "next-auth": "^3.24.1",
         "prettier": "^2.3.0",
         "raw-body": "^2.4.1",
         "react": "^17.0.2",
