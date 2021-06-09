@@ -36,7 +36,7 @@
         "aws-sdk": "^2.919.0",
         "basic-auth": "^2.0.1",
         "date-input-polyfill": "^2.14.0",
-        "eslint": "^7.27.0",
+        "eslint": "^7.28.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "^7.24.0",
