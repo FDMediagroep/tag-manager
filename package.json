@@ -33,7 +33,7 @@
         "@typescript-eslint/eslint-plugin": "^4.27.0",
         "@typescript-eslint/parser": "^4.27.0",
         "@typescript-eslint/typescript-estree": "^4.27.0",
-        "aws-sdk": "^2.929.0",
+        "aws-sdk": "^2.932.0",
         "basic-auth": "^2.0.1",
         "date-input-polyfill": "^2.14.0",
         "eslint": "^7.28.0",
